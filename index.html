@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Migração para a VPS do time · Backoffice · Victoria Magri</title>
+<style>
+  :root {
+    color-scheme: light;
+    --azul: #0055FF; --navy: #080E32; --azul-800: #193CB8; --azul-500: #2B7FFF;
+    --tint: #F0F2FA; --canvas: #EAEEF6; --coral: #FC6058; --texto2: #6B6E84;
+    --borda: #E6E7EA; --verde: #0E8A4F; --verde-bg: #E7F6EE; --ambar: #A15C00; --ambar-bg: #FFF4E0;
+    --cinza-bg: #F1F2F4;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--canvas); color: var(--navy);
+         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; }
+  .marca { background: var(--navy); color: #fff; padding: 10px 32px; font-size: 13px; letter-spacing: .08em; }
+  .marca b { color: var(--coral); }
+  main { max-width: 1080px; margin: 0 auto; padding: 32px 24px 64px; }
+  header h1 { font-size: 30px; margin: 0 0 6px; line-height: 1.2; }
+  .meta { color: var(--texto2); font-size: 14px; margin-bottom: 18px; }
+  .lead { background: #fff; border-left: 5px solid var(--azul); border-radius: 10px; padding: 18px 22px; font-size: 16px; }
+  section { margin-top: 36px; }
+  h2 { font-size: 21px; margin: 0 0 6px; padding-bottom: 6px; border-bottom: 2px solid var(--azul); }
+  h3 { font-size: 16px; margin: 0 0 6px; }
+  .sub { color: var(--texto2); margin: 6px 0 16px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 22px; }
+  .card { background: #fff; border-radius: 12px; padding: 18px; border: 1px solid var(--borda); }
+  .card .num { font-size: 38px; font-weight: 700; color: var(--azul); line-height: 1; }
+  .card.alerta .num { color: var(--coral); }
+  .card p { margin: 8px 0 0; font-size: 14px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid var(--borda); }
+  th { background: var(--tint); text-align: left; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--azul-800); padding: 10px 12px; }
+  td { padding: 11px 12px; border-top: 1px solid var(--borda); vertical-align: top; font-size: 14px; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+  .ok { background: var(--verde-bg); color: var(--verde); }
+  .espera { background: var(--ambar-bg); color: var(--ambar); }
+  .trava { background: #FFE9E7; color: #B3261E; }
+  .fora { background: var(--cinza-bg); color: var(--texto2); }
+  .pend { background: #fff; border: 1px solid var(--borda); border-left: 5px solid var(--coral); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; }
+  .pend .cab { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+  .pend .n { background: var(--coral); color: #fff; font-weight: 700; border-radius: 8px; padding: 2px 9px; }
+  .pend .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 10px; font-size: 14px; }
+  .pend .grid div { background: var(--tint); border-radius: 8px; padding: 8px 10px; }
+  .pend .grid b { display: block; font-size: 12px; color: var(--azul-800); text-transform: uppercase; letter-spacing: .04em; }
+  .destaque { color: var(--azul); font-weight: 700; }
+  .destaque.coral { color: var(--coral); }
+  ul.lista { background: #fff; border: 1px solid var(--borda); border-radius: 12px; padding: 16px 20px 16px 38px; margin: 0; }
+  ul.lista li { margin: 4px 0; }
+  ol.passos { background: #fff; border: 1px solid var(--borda); border-radius: 12px; padding: 16px 20px 16px 40px; margin: 0; }
+  ol.passos li { margin: 6px 0; }
+  .chips span { display: inline-block; background: #fff; border: 1px solid var(--borda); border-radius: 999px; padding: 4px 12px; margin: 4px 4px 0 0; font-size: 13px; }
+  code { background: var(--tint); padding: 1px 6px; border-radius: 5px; font-size: 13px; }
+  footer { margin-top: 40px; color: var(--texto2); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="marca">● <b>SEAZONE</b> · BACKOFFICE · FRANQUIAS &amp; QUALIDADE</div>
+<main>
+<header>
+  <h1>Migração das rotinas, skills e agentes para a VPS do time</h1>
+  <div class="meta">Situação em 17/11/2026 · Victoria Magri</div>
+  <div class="lead">
+    As rotinas operacionais do Backoffice estão saindo do notebook da Victoria e passando a rodar na VPS do time,
+    para que a gerência consiga acompanhar e rodar no lugar dela quando precisar.
+    Hoje, <span class="destaque">3 das 12 rotinas agendadas</span> já rodam na VPS, e <span class="destaque">todas as 13 skills operacionais</span> já estão lá.
+    O que ainda trava o resto são <span class="destaque coral">8 pendências da própria VPS</span>. A mais grave é a conta do Claude da VPS, que estava sem limite de uso antes mesmo de as rotinas da Victoria usarem.
+  </div>
+</header>
+
+<div class="cards">
+  <div class="card"><div class="num">3 de 12</div><p>rotinas agendadas <b>já rodam na VPS</b> e publicaram normalmente em 17/11.</p></div>
+  <div class="card"><div class="num">2</div><p>rotinas estão <b>montadas e testadas</b>, esperando só a conta do Claude da VPS ter limite.</p></div>
+  <div class="card"><div class="num">13</div><p>skills operacionais e <b>2 agentes</b> (workflows salvos) já foram copiados para a VPS.</p></div>
+  <div class="card alerta"><div class="num">8</div><p>pendências da VPS travam as outras rotinas. <b>4 delas dependem da gerência.</b></p></div>
+</div>
+
+<section>
+  <h2>Como cada rotina está</h2>
+  <p class="sub">Padrão seguido: uma pasta por rotina com <code>rodar.sh</code> e <code>LEIAME.md</code>, agendamento no crontab com o nome do processo, credenciais só no <code>~/.env</code> protegido. Na coluna "O que trava", o número é a pendência explicada mais abaixo.</p>
+  <table>
+    <thead><tr><th>Rotina</th><th>Quando roda</th><th>Situação</th><th>O que já foi feito ou o que falta</th><th>O que trava</th></tr></thead>
+    <tbody>
+      <tr><td><b>Elogios Franquias</b></td><td>Todo dia às 10h30; só grava na 1ª e na 3ª quarta do mês</td><td><span class="pill ok">Na VPS</span></td><td>Teste deu o mesmo resultado do notebook. A tarefa do Windows foi desligada. A primeira rodada de verdade é quarta, 18/11.</td><td>—</td></tr>
+      <tr><td><b>Monitor Premium Avaliações</b></td><td>Todo dia às 10h</td><td><span class="pill ok">Na VPS</span></td><td>Estava parado desde 12/11 por um erro de acesso ao Sapron. Corrigido na VPS, voltou a publicar em 17/11.</td><td>—</td></tr>
+      <tr><td><b>Monitor Envio em Massa</b></td><td>Todo dia às 14h</td><td><span class="pill ok">Na VPS</span></td><td>Mesmo erro do Monitor Premium, parado desde 12/11. Corrigido na VPS, voltou a publicar em 17/11.</td><td>—</td></tr>
+      <tr><td><b>Navi</b> (pendências e panorama semanal)</td><td>Todo dia às 15h; sexta às 16h</td><td><span class="pill espera">Montada</span></td><td>Leitura do Slack testada: 111 conversas lidas, 28 com pendência. O script passou por revisão independente.</td><td>1, 2 e 3</td></tr>
+      <tr><td><b>Respostas Airbnb</b></td><td>Segunda a sexta às 9h</td><td><span class="pill espera">Montada</span></td><td>Leitura da Stays testada: lote de 50 avaliações, todas vencendo no dia. A VPS monta o lote e redige; a publicação continua no notebook, pelo Chrome.</td><td>1 e 2</td></tr>
+      <tr><td><b>Panorama Nova Ocorrência</b></td><td>Segunda a sexta às 16h</td><td><span class="pill trava">Travada</span></td><td>Vai entregar por DM da Navi no Slack (decidido em 17/11). Lê tudo pelo Lovable.</td><td>1, 2 e 3</td></tr>
+      <tr><td><b>Triagem de Comentários</b></td><td>Segunda a sexta às 14h</td><td><span class="pill trava">Travada</span></td><td>A leitura vai para a VPS; o envio dos cards continua no notebook, pelo Chrome.</td><td>1, 2, 3 e 4</td></tr>
+      <tr><td><b>Contestar Airbnb</b></td><td>9h e 21h30</td><td><span class="pill trava">Travada</span></td><td>A seleção das avaliações vai para a VPS; o envio da contestação continua no notebook.</td><td>1, 2 e 4</td></tr>
+      <tr><td><b>Reclame Aqui</b></td><td>De hora em hora, das 8h às 20h</td><td><span class="pill trava">Travada</span></td><td>A parte de Slack e Sapron vai para a VPS; a leitura do site do Reclame Aqui só funciona pelo Chrome.</td><td>1, 2, 4 e 5</td></tr>
+      <tr><td><b>Portal Avaliações Airbnb</b></td><td>Todo dia às 9h</td><td><span class="pill trava">Decisão</span></td><td>O código no GitHub está atrás do que roda no notebook, e o aviso é um balão do Windows. Falta decidir o destino.</td><td>Decisão da Victoria</td></tr>
+      <tr><td><b>Relatório Áreas Ocorrências</b></td><td>Sexta às 9h</td><td><span class="pill fora">Removida</span></td><td>Só gerava um HTML no notebook que ninguém recebia. Saiu do agendamento em 17/11.</td><td>—</td></tr>
+      <tr><td><b>Meu Dia</b></td><td>Segunda a sexta às 8h30</td><td><span class="pill fora">Fica no notebook</span></td><td>É pessoal e lê arquivos do notebook.</td><td>—</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Skills e agentes</h2>
+  <p class="sub">Foram para a VPS <span class="destaque">13 skills operacionais</span> e <span class="destaque">2 agentes</span>. As skills pessoais e de treinamento ficaram no notebook, por decisão da Victoria. Antes da cópia, todas foram conferidas para garantir que não havia nenhuma senha ou token dentro.</p>
+  <table>
+    <thead><tr><th>Skill que foi para a VPS</th><th>Já funciona lá?</th><th>Por quê</th></tr></thead>
+    <tbody>
+      <tr><td>analise-sapron-implantacao</td><td><span class="pill ok">Sim</span></td><td>Usa o Sapron, que já está conectado na VPS.</td></tr>
+      <tr><td>cobrar-sapron</td><td><span class="pill ok">Sim</span></td><td>Usa o Sapron, que já está conectado na VPS.</td></tr>
+      <tr><td>respostas-sapron</td><td><span class="pill ok">Sim</span></td><td>Usa o Sapron, que já está conectado na VPS.</td></tr>
+      <tr><td>notas-avaliacao</td><td><span class="pill ok">Sim</span></td><td>Usa a Nekt e o kpi-system, os dois conectados.</td></tr>
+      <tr><td>navi</td><td><span class="pill ok">Sim</span></td><td>Posta com o token próprio do app Navi, que já está na VPS.</td></tr>
+      <tr><td>kpi-qualidade</td><td><span class="pill espera">Em parte</span></td><td>Parte dos KPIs vem do app de ocorrências, que é lido pelo Lovable (pendência 3).</td></tr>
+      <tr><td>kpi-comentario</td><td><span class="pill espera">Em parte</span></td><td>Parte dos KPIs vem do app de comentários, que é lido pelo Lovable (pendência 3).</td></tr>
+      <tr><td>caca-ocorrencias</td><td><span class="pill espera">Em parte</span></td><td>Cruza com o app de ocorrências, lido pelo Lovable (pendência 3).</td></tr>
+      <tr><td>triagem-comentarios-negativos</td><td><span class="pill espera">Em parte</span></td><td>A análise roda; o envio é pelos botões do app, no Chrome (pendência 4).</td></tr>
+      <tr><td>responder-airbnb</td><td><span class="pill espera">Em parte</span></td><td>Lote e textos na VPS; a publicação é no Chrome logado na Stays (pendência 4).</td></tr>
+      <tr><td>contestar-airbnb</td><td><span class="pill espera">Em parte</span></td><td>Seleção na VPS; o envio é no Chrome logado no Airbnb (pendência 4).</td></tr>
+      <tr><td>reclame-aqui</td><td><span class="pill espera">Em parte</span></td><td>O site do Reclame Aqui só abre pelo Chrome (pendência 4) e o Slack passa pelo Composio (pendência 5).</td></tr>
+      <tr><td>panorama-nova-ocorrencia</td><td><span class="pill trava">Ainda não</span></td><td>Lê tudo pelo Lovable (pendência 3).</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:22px">Agentes (workflows salvos)</h3>
+  <table>
+    <thead><tr><th>Agente</th><th>Situação</th><th>Para que serve</th></tr></thead>
+    <tbody>
+      <tr><td>analise-sapron-implantacao</td><td><span class="pill ok">Na VPS</span></td><td>Confere no Sapron cada card de Implantação da coluna Nova Ocorrência e dá um veredito. É chamado pelo Panorama.</td></tr>
+      <tr><td>analise-sapron-manutencao</td><td><span class="pill ok">Na VPS</span></td><td>Faz a mesma conferência para os cards de Manutenção. Também é chamado pelo Panorama.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:22px">Ficaram no notebook (pessoais ou de treinamento)</h3>
+  <div class="chips">
+    <span>iavd</span><span>nivelamento-2</span><span>preparar-nivelamento-2</span><span>heartbeat</span><span>meu-dia</span>
+    <span>score-uso-ia</span><span>mapa-atividades</span><span>setup-check</span><span>auditoria-ambiente-agentes</span>
+    <span>doctor-semanal</span><span>deepdive</span><span>eval</span><span>hillclimbing</span><span>metodo-batelada</span><span>quadro-batelada</span>
+  </div>
+</section>
+
+<section>
+  <h2>As 8 pendências da VPS</h2>
+  <p class="sub">Ordenadas pelo impacto. As pendências 1 e 2 travam sozinhas <span class="destaque coral">6 rotinas</span>, porque todas usam o Claude.</p>
+
+  <div class="pend"><div class="cab"><span class="n">1</span><h3>A conta do Claude da VPS fica sem limite de uso</h3></div>
+    <p>Em 17/11, às 10h50, a conta logada na VPS já estava sem limite e só voltaria às 12h20. Isso aconteceu antes de qualquer rotina da Victoria usar o Claude, o que indica que a conta é usada por outras pessoas ou máquinas. Toda rotina que precisa do Claude falha enquanto o limite não volta.</p>
+    <div class="grid"><div><b>Rotinas afetadas</b>Navi, Respostas Airbnb, Panorama, Triagem, Contestar, Reclame Aqui</div><div><b>Quem resolve</b>Gerência</div><div><b>Ação sugerida</b>Uma conta do Claude só para a VPS do time, ou um plano com limite maior</div></div></div>
+
+  <div class="pend"><div class="cab"><span class="n">2</span><h3>A VPS não troca de conta sozinha</h3></div>
+    <p>No notebook, um programa (o switcher) troca de conta quando o limite acaba e retoma o trabalho. Na VPS esse programa não existe: o Claude fica preso a uma conta só.</p>
+    <div class="grid"><div><b>Rotinas afetadas</b>As mesmas 6 da pendência 1</div><div><b>Quem resolve</b>Gerência e administrador da VPS</div><div><b>Ação sugerida</b>Instalar a troca de conta na VPS, ou garantir uma conta fixa com limite suficiente</div></div></div>
+
+  <div class="pend"><div class="cab"><span class="n">3</span><h3>O Lovable não está conectado na VPS</h3></div>
+    <p>O Lovable é por onde o Claude lê o app de ocorrências e multas. Na VPS ele aparece pedindo login. Sem ele, o Panorama Nova Ocorrência não funciona e a Navi manda o resumo avisando que não conseguiu ler o Lovable.</p>
+    <div class="grid"><div><b>Rotinas afetadas</b>Panorama, Triagem, Caça às Ocorrências, KPIs e o alerta de Nova Ocorrência da Navi</div><div><b>Quem resolve</b>Gerência autoriza; a Victoria faz o login uma vez</div><div><b>Ação sugerida</b>Autorizar o login do Lovable na conta do Claude da VPS</div></div></div>
+
+  <div class="pend"><div class="cab"><span class="n">4</span><h3>A VPS não tem navegador</h3></div>
+    <p>Não há Chrome, ferramentas de desenvolvedor do Chrome, extensão Claude in Chrome nem tela virtual. As rotinas que publicam no Airbnb, na Stays e no Reclame Aqui dependem do Chrome logado da Victoria. Em 17/11 ficou decidido levar para a VPS só a parte que não usa navegador e manter a publicação no notebook.</p>
+    <div class="grid"><div><b>Rotinas afetadas</b>Reclame Aqui, Contestar, publicação das Respostas Airbnb, envio da Triagem</div><div><b>Quem resolve</b>Administrador da VPS (precisa de permissão de administrador)</div><div><b>Ação sugerida</b>Manter como decidido, ou instalar o Chrome e testar. O Reclame Aqui e o Airbnb provavelmente bloqueiam acesso automático</div></div></div>
+
+  <div class="pend"><div class="cab"><span class="n">5</span><h3>O Composio não está configurado na VPS</h3></div>
+    <p>O Composio é a ponte que o agente do Reclame Aqui usa para ler e postar no canal #respostas-reclame-aqui com a conta Slack da Victoria. A Navi não precisa dele, porque usa o app próprio.</p>
+    <div class="grid"><div><b>Rotinas afetadas</b>Reclame Aqui</div><div><b>Quem resolve</b>Victoria</div><div><b>Ação sugerida</b>Adicionar o Composio no usuário da VPS e fazer o login dela</div></div></div>
+
+  <div class="pend"><div class="cab"><span class="n">6</span><h3>O uso da VPS não aparece na tela de Uso de IA</h3></div>
+    <p>O coletor de Uso de IA mede as conversas do Claude no notebook. O que roda na VPS fica de fora dessa medição.</p>
+    <div class="grid"><div><b>Rotinas afetadas</b>Todas as que usam o Claude</div><div><b>Quem resolve</b>Gerência e o responsável pelo coletor</div><div><b>Ação sugerida</b>Confirmar se o uso na VPS precisa contar e, se sim, instalar o coletor lá</div></div></div>
+
+  <div class="pend"><div class="cab"><span class="n">7</span><h3>Não há aviso central quando uma rotina falha</h3></div>
+    <p>O agendador da VPS não manda e-mail em caso de erro, e os registros das rotinas não são limpos automaticamente. Cada rotina guarda o próprio registro (<code>rotina.log</code>). A Navi e a Respostas Airbnb já avisam por DM quando falham; as 3 que já rodam só registram no arquivo.</p>
+    <div class="grid"><div><b>Rotinas afetadas</b>Todas</div><div><b>Quem resolve</b>Victoria</div><div><b>Ação sugerida</b>Aviso por DM da Navi também nas 3 rotinas que já rodam</div></div></div>
+
+  <div class="pend"><div class="cab"><span class="n">8</span><h3>O usuário da Victoria não tem permissão de administrador</h3></div>
+    <p>É o esperado numa máquina compartilhada. Qualquer instalação no sistema, como o Chrome da pendência 4, passa pelo administrador da VPS.</p>
+    <div class="grid"><div><b>Rotinas afetadas</b>Só o que exigir instalação no sistema</div><div><b>Quem resolve</b>Administrador da VPS</div><div><b>Ação sugerida</b>Pedir quando a pendência 4 for decidida</div></div></div>
+</section>
+
+<section>
+  <h2>O que já está pronto na VPS</h2>
+  <ul class="lista">
+    <li>Acesso da Victoria à VPS e login do Claude e do GitHub feitos.</li>
+    <li><span class="destaque">12 credenciais</span> guardadas no arquivo protegido do usuário. Os valores foram levados do notebook direto para a VPS e conferidos, sem aparecer em nenhuma tela.</li>
+    <li>Conexões do Claude com o <b>Sapron</b>, o <b>Suporte Unificado</b>, o <b>kpi-system</b> e o <b>Taskdex</b> funcionando. A <b>Nekt</b> entra pela conta do Claude.</li>
+    <li><span class="destaque">13 skills</span> e <span class="destaque">2 agentes</span> copiados.</li>
+    <li>A máquina tem folga: 8 núcleos, 31 GB de memória e 184 GB livres em disco.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Próximos passos</h2>
+  <ol class="passos">
+    <li>Levar as pendências 1, 2 e 3 à gerência de uma vez.</li>
+    <li>Com a resposta, ligar a Navi e a Respostas Airbnb na VPS e desligar as tarefas no notebook.</li>
+    <li>Depois, ligar o Panorama Nova Ocorrência e a Triagem de Comentários.</li>
+    <li>Por último, a parte sem navegador do Contestar Airbnb e do Reclame Aqui.</li>
+    <li>Decidir o destino do Portal Avaliações Airbnb.</li>
+  </ol>
+</section>
+
+<footer>Atualizado em 17/11/2026 · Victoria Magri · Backoffice (Franquias &amp; Qualidade)</footer>
+</main>
+</body>
+</html>
