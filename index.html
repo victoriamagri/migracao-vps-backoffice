@@ -65,7 +65,7 @@
     As rotinas operacionais do Backoffice estão saindo do notebook da Victoria e passando a rodar na VPS do time,
     para que a gerência consiga acompanhar e rodar no lugar dela quando precisar.
     Hoje, <span class="destaque">3 das 10 rotinas agendadas</span> já rodam na VPS, e <span class="destaque">todas as 13 skills operacionais</span> já estão lá.
-    O que ainda trava o resto são <span class="destaque coral">7 pendências da própria VPS</span>. A mais grave é a conta do Claude da VPS, que estava sem limite de uso antes mesmo de as rotinas da Victoria usarem.
+    O que ainda trava o resto são <span class="destaque coral">7 pendências da própria VPS</span>. A mais grave é a conta do Claude da VPS: ela atingiu o limite semanal em 17/11 e só volta em 21/11, o que trava todas as rotinas que usam o Claude.
   </div>
 </header>
 
@@ -81,7 +81,7 @@
   <p class="sub">Ordenadas pelo impacto. As pendências 1 e 2 travam sozinhas <span class="destaque coral">6 rotinas</span>, porque todas usam o Claude.</p>
 
   <div class="pend"><div class="cab"><span class="n">1</span><h3>A conta do Claude da VPS fica sem limite de uso</h3></div>
-    <p>Em 17/11, às 10h50, a conta logada na VPS já estava sem limite e só voltaria às 12h20. Isso aconteceu antes de qualquer rotina da Victoria usar o Claude, o que indica que a conta é usada por outras pessoas ou máquinas. Toda rotina que precisa do Claude falha enquanto o limite não volta.</p>
+    <p>Em 17/11, às 10h50, a conta logada na VPS já estava sem o limite de 5 horas, antes de qualquer rotina da Victoria usar o Claude. Às 12h45 do mesmo dia ela bateu o <b>limite semanal</b>, que só volta em <span class="destaque coral">21/11 às 16h</span>. A VPS é usada por outras pessoas do time ao mesmo tempo. Enquanto o limite não volta, toda rotina que precisa do Claude falha.</p>
     <div class="grid"><div><b>Rotinas afetadas</b>Navi, Respostas Airbnb, Panorama, Triagem, Contestar, Reclame Aqui</div><div><b>Quem resolve</b>Gerência</div><div><b>Ação sugerida</b>Uma conta do Claude só para a VPS do time, ou um plano com limite maior</div></div></div>
 
   <div class="pend"><div class="cab"><span class="n">2</span><h3>A VPS não troca de conta sozinha</h3></div>
@@ -119,8 +119,8 @@
       <tr><td><b>Elogios Franquias</b></td><td>Todo dia às 10h30; só grava na 1ª e na 3ª quarta do mês</td><td><span class="pill ok">Na VPS</span></td><td>Teste deu o mesmo resultado do notebook. A tarefa do Windows foi desligada. A primeira rodada de verdade é quarta, 18/11.</td><td>—</td></tr>
       <tr><td><b>Monitor Premium Avaliações</b></td><td>Todo dia às 10h</td><td><span class="pill ok">Na VPS</span></td><td>Estava parado desde 12/11 por um erro de acesso ao Sapron. Corrigido na VPS, voltou a publicar em 17/11.</td><td>—</td></tr>
       <tr><td><b>Monitor Envio em Massa</b></td><td>Todo dia às 14h</td><td><span class="pill ok">Na VPS</span></td><td>Mesmo erro do Monitor Premium, parado desde 12/11. Corrigido na VPS, voltou a publicar em 17/11.</td><td>—</td></tr>
-      <tr><td><b>Navi</b> (pendências e panorama semanal)</td><td>Todo dia às 15h; sexta às 16h</td><td><span class="pill espera">Montada</span></td><td>Leitura do Slack testada: 111 conversas lidas, 28 com pendência. O script passou por revisão independente.</td><td>1, 2 e 3</td></tr>
-      <tr><td><b>Respostas Airbnb</b></td><td>Segunda a sexta às 9h</td><td><span class="pill espera">Montada</span></td><td>Leitura da Stays testada: lote de 50 avaliações, todas vencendo no dia. A VPS monta o lote e redige; a publicação continua no notebook, pelo Chrome.</td><td>1 e 2</td></tr>
+      <tr><td><b>Navi</b> (pendências e panorama semanal)</td><td>Todo dia às 15h; sexta às 16h</td><td><span class="pill espera">Montada</span></td><td>Testada de ponta a ponta em 17/11: o resumo saiu completo (alertas, KPIs, notas, Slack e Taskdex). O script passou por revisão independente.</td><td>1, 2 e 3</td></tr>
+      <tr><td><b>Respostas Airbnb</b></td><td>Segunda a sexta às 9h</td><td><span class="pill espera">Montada</span></td><td>Testada de ponta a ponta em 17/11: lote de 50 avaliações e as 50 respostas redigidas na VPS. A publicação continua no notebook, pelo Chrome.</td><td>1 e 2</td></tr>
       <tr><td><b>Panorama Nova Ocorrência</b></td><td>Segunda a sexta às 16h</td><td><span class="pill trava">Travada</span></td><td>Vai entregar por DM da Navi no Slack (decidido em 17/11). Lê tudo pelo Lovable.</td><td>1, 2 e 3</td></tr>
       <tr><td><b>Triagem de Comentários</b></td><td>Segunda a sexta às 14h</td><td><span class="pill trava">Travada</span></td><td>A leitura vai para a VPS; o envio dos cards continua no notebook, pelo Chrome.</td><td>1, 2, 3 e 4</td></tr>
       <tr><td><b>Contestar Airbnb</b></td><td>9h e 21h30</td><td><span class="pill trava">Travada</span></td><td>A seleção das avaliações vai para a VPS; o envio da contestação continua no notebook.</td><td>1, 2 e 4</td></tr>
